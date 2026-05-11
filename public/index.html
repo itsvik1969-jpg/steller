@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dawn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>STELLER | Botanical Apothecary · Earth-Luxe Atelier</title>
+  <!-- Google Fonts: Serene + Modern -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0e1a14;
+      --bg-deep: #08120c;
+      --surface: #1e2c24;
+      --surface-elevated: #2a3c30;
+      --text: #ede9dd;
+      --text-soft: #c2bcab;
+      --text-muted: #5b6e5e;
+      --accent: #e3b87c;
+      --accent-glow: #f0ca96;
+      --accent-earth: #bc9a6c;
+      --accent-moss: #7f9a6e;
+      --accent-clay: #c27e55;
+      --border-light: #334433;
+      --shadow-sm: 0 18px 30px -12px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 30px 50px -18px rgba(0, 0, 0, 0.7);
+      --transition: 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      --radius-card: 28px;
+      --radius-pill: 60px;
+    }
+
+    [data-theme="dawn"] {
+      --bg: #fef9ec;
+      --bg-deep: #faf3e0;
+      --surface: #ffffff;
+      --surface-elevated: #fffcf5;
+      --text: #2a2b26;
+      --text-soft: #797a6e;
+      --text-muted: #ded9ca;
+      --accent: #c88f4a;
+      --accent-glow: #e0a96a;
+      --accent-earth: #b28044;
+      --accent-moss: #8a9a5e;
+      --border-light: #ece3d4;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+      line-height: 1.45;
+      font-weight: 400;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--surface-elevated); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 20px; }
+
+    @keyframes driftPetal {
+      0% { transform: translateY(0px) rotate(0deg); opacity: 0.4; }
+      100% { transform: translateY(-8px) rotate(3deg); opacity: 0.9; }
+    }
+
+    /* header — raw clay aesthetic */
+    .ritual-header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(var(--bg-rgb), 0.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--accent);
+      transition: var(--transition);
+    }
+    :root { --bg-rgb: 14, 26, 20; }
+    [data-theme="dawn"] { --bg-rgb: 254, 249, 236; }
+
+    .nav-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.8rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      background: linear-gradient(125deg, var(--accent-glow), var(--accent-earth), #dbbc87);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 2px;
+      font-family: 'Inter', sans-serif;
+    }
+    .nav-links a {
+      position: relative;
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: 0.25s;
+    }
+    .nav-links a:hover { color: var(--accent-glow); letter-spacing: 2.5px; }
+    .nav-links a::after {
+      content: '✦';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 8px;
+      opacity: 0;
+      transition: 0.2s;
+    }
+    .nav-links a:hover::after { opacity: 1; right: -24px; }
+
+    .utility-actions {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+    }
+    #themeToggle {
+      background: var(--surface-elevated);
+      border: 1px solid var(--accent);
+      border-radius: 40px;
+      padding: 0.3rem 1.1rem;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 500;
+    }
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: 0.2s;
+    }
+    .cart-icon:hover { color: var(--accent-glow); transform: scale(1.03); }
+    .cart-count {
+      background: var(--accent);
+      color: #0e1a14;
+      font-size: 0.5rem;
+      font-weight: 800;
+      border-radius: 30px;
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: -10px;
+      right: -16px;
+    }
+
+    /* hero — dawn mist */
+    .hero-ritual {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: 50% 40%;
+    }
+    .hero-ritual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(125deg, rgba(14,26,20,0.78) 0%, rgba(8,18,12,0.6) 100%);
+      z-index: 1;
+    }
+    [data-theme="dawn"] .hero-ritual::before {
+      background: linear-gradient(125deg, rgba(254,249,236,0.75) 0%, rgba(250,243,224,0.65) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      padding: 0 8%;
+    }
+    .hero-sub {
+      font-size: 0.55rem;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: var(--accent-glow);
+    }
+    .hero-main-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.8rem, 12vw, 7rem);
+      font-weight: 500;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+      color: #fef3e2;
+      text-shadow: 0 0 18px rgba(227,184,124,0.4);
+      letter-spacing: -0.5px;
+    }
+    .hero-leaf {
+      font-size: 1.3rem;
+      margin: 0.5rem 0;
+      color: var(--accent-glow);
+      animation: driftPetal 2.8s infinite alternate;
+      display: inline-block;
+    }
+    .hero-offer {
+      font-size: 0.7rem;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      margin: 1rem 0 1.5rem;
+      border-left: 2px solid var(--accent);
+    }
+
+    .btn-primary {
+      background: transparent;
+      border: 1.5px solid var(--accent);
+      color: var(--accent-glow);
+      padding: 0.85rem 2.8rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(4px);
+    }
+    .btn-primary:hover {
+      background: var(--accent);
+      color: var(--bg-deep);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(227,184,124,0.3);
+    }
+
+    .collection-header {
+      max-width: 1400px;
+      margin: 5rem auto 2rem auto;
+      padding: 0 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1rem;
+    }
+    .collection-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      background: linear-gradient(125deg, var(--accent-glow), var(--accent-earth));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .collection-header p {
+      color: var(--accent-moss);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+    }
+
+    .grid-shop {
+      max-width: 1400px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid var(--border-light);
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 24px 35px -12px rgba(227,184,124,0.25);
+    }
+    .card-img {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .product-card:hover .card-img img { transform: scale(1.03); }
+    .quick-add {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(14,26,20,0.94), transparent);
+      padding: 1.2rem;
+      opacity: 0;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .product-card:hover .quick-add { opacity: 1; }
+    .quick-add button {
+      background: var(--accent);
+      border: none;
+      width: 85%;
+      padding: 0.7rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      border-radius: 50px;
+      transition: 0.2s;
+      color: #0e1a14;
+    }
+    .product-info {
+      padding: 1rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .product-details h4 {
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--accent-earth);
+    }
+    .product-details h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-top: 5px;
+    }
+    .price-block .current { font-weight: 700; font-size: 1rem; color: var(--accent-glow); }
+    .price-block .old { font-size: 0.7rem; text-decoration: line-through; color: var(--text-muted); margin-left: 6px; }
+
+    /* cart sidebar — ritual vessel */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(8, 18, 12, 0.96);
+      backdrop-filter: blur(20px);
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.25s;
+    }
+    .cart-overlay.active { visibility: visible; opacity: 1; }
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 1px solid var(--accent);
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-overlay.active .cart-sidebar { transform: translateX(0); }
+    .cart-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+    }
+    .cart-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      background: linear-gradient(125deg, var(--accent-glow), var(--accent-earth));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .cart-item {
+      display: flex;
+      gap: 0.8rem;
+      background: var(--surface-elevated);
+      padding: 0.9rem;
+      border-radius: 24px;
+    }
+    .cart-item-img {
+      width: 70px;
+      height: 85px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .cart-item-details { flex: 1; }
+    .cart-item-name { font-weight: 600; font-size: 0.85rem; font-family: 'Inter';}
+    .cart-item-price { font-size: 0.7rem; color: var(--accent-glow); }
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .quantity-btn {
+      background: var(--text-muted);
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .remove-item {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .cart-footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .checkout-btn {
+      width: 100%;
+      background: var(--accent);
+      border: none;
+      padding: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      border-radius: 60px;
+      cursor: pointer;
+      color: #0e1a14;
+    }
+    .empty-cart { text-align: center; padding: 2rem; color: var(--text-soft); font-size: 0.8rem; }
+
+    footer {
+      background: var(--surface-elevated);
+      padding: 3rem 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border-light);
+      position: relative;
+    }
+    footer::after {
+      content: '⨀';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      padding: 0 1rem;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      background: linear-gradient(125deg, var(--accent-glow), var(--accent-earth));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    @media (max-width: 750px) {
+      .nav-container { padding: 0.8rem 1rem; flex-direction: column; gap: 0.5rem; }
+      .grid-shop { padding: 0 1rem; gap: 1rem; }
+    }
+
+    /* welcome modal — earth ceremony */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(8, 18, 12, 0.98);
+      backdrop-filter: blur(28px);
+      transition: opacity 0.3s;
+    }
+    .ritual-modal {
+      background: var(--surface);
+      max-width: 520px;
+      width: 90%;
+      border-radius: 56px;
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 45px rgba(227,184,124,0.2);
+    }
+    .modal-icon {
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, rgba(227,184,124,0.2), transparent);
+      border-radius: 100px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--accent-glow);
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 500;
+      background: linear-gradient(125deg, var(--accent-glow), var(--accent-earth));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .btn-modal-primary {
+      background: var(--accent);
+      border: none;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-modal-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      padding: 0.7rem 1.6rem;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    .modal-fade-out { opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  </style>
+  
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBJZ7C7VV0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SBJZ7C7VV0');
+</script>
+  
+</head>
+<body>
+
+<div id="entryModal" class="modal-overlay">
+  <div class="ritual-modal">
+    <button id="closeModalBtn" style="float:right; background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-soft);">✕</button>
+    <div class="modal-icon"><i class="fas fa-feather-alt"></i></div>
+    <h2 class="modal-title">STELLER</h2>
+    <p style="margin: 1rem 0; color: var(--text-soft);">Ground yourself in slow luxury. Each piece is an ode to earth and elemental grace. Welcome to the atelier of wild botanicals.</p>
+    <div class="modal-buttons">
+      <button id="enterBtn" class="btn-modal-primary">ENTER THE RITUAL</button>
+      <button id="laterBtn" class="btn-modal-secondary">WANDER</button>
+    </div>
+  </div>
+</div>
+
+<header class="ritual-header">
+  <div class="nav-container">
+    <div class="brand">STELLER</div>
+    <nav class="nav-links">
+      <a href="#shop">WILD</a>
+      <a href="#shop">BOTANICA</a>
+      <a href="#shop">TERRAIN</a>
+      <a href="#">APOTHECARY</a>
+    </nav>
+    <div class="utility-actions">
+      <button id="themeToggle">☀️</button>
+      <div class="cart-icon" id="cartIcon">
+        <i class="fas fa-mortar-board"></i>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero-ritual">
+    <div class="hero-content">
+      <div class="hero-sub">EARTH CODEX · SLOW WEAR</div>
+      <h1 class="hero-main-title">STELLER</h1>
+      <div class="hero-leaf"><i class="fas fa-seedling"></i></div>
+      <div class="hero-offer">✦ first gathering: <strong>25% OFF</strong> primal collection ✦</div>
+      <a href="#shop" class="btn-primary">EXPLORE →</a>
+    </div>
+  </section>
+
+  <div class="collection-header" id="shop">
+    <h2>🌾 The Terrain Archive 🌾</h2>
+    <p>12 elemental vessels / slow forged</p>
+  </div>
+
+  <div class="grid-shop" id="productGrid"></div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">STELLER</div>
+    <div style="margin: 0.6rem 0; font-size:0.55rem; letter-spacing: 3px;">ANDES · KYOTO · CORSICA · ÖLAND</div>
+    <p style="font-size:0.45rem; opacity:0.6; margin-top: 1rem;">© 2026 STELLER · grounded in elemental harmony</p>
+  </div>
+</footer>
+
+<div id="cartOverlay" class="cart-overlay">
+  <div class="cart-sidebar">
+    <div class="cart-header">
+      <h3>RITUAL BASKET</h3>
+      <button class="close-cart" id="closeCartBtn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItemsContainer"><div class="empty-cart">𓋴 your vessel awaits. add wild pieces.</div></div>
+    <div class="cart-footer" id="cartFooter" style="display: none;">
+      <div class="cart-total"><span>Total (USD)</span><span id="cartTotalPrice">$0</span></div>
+      <button class="checkout-btn" id="checkoutBtn">⚘ GROUNDED RITUAL ⚘</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const products = [
+    { id: 1, name: "Obsidian Blazer", category: "TAILORING", original: 1490, discountPrice: 1117, img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=687&auto=format&fit=crop" },
+    { id: 2, name: "Meadow Shirt", category: "SHIRTING", original: 590, discountPrice: 442, img: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?q=80&w=2070&auto=format&fit=crop" },
+    { id: 3, name: "Selkie Gown", category: "EVENING", original: 2890, discountPrice: 2167, img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=687&auto=format&fit=crop" },
+    { id: 4, name: "Earth Cargo", category: "BOTTOMS", original: 690, discountPrice: 517, img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop" },
+    { id: 5, name: "Fern Knit", category: "KNITWEAR", original: 850, discountPrice: 637, img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=764&auto=format&fit=crop" },
+    { id: 6, name: "Clay Trench", category: "OUTERWEAR", original: 2050, discountPrice: 1537, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=600&auto=format&fit=crop" },
+    { id: 7, name: "Willow Skirt", category: "SKIRTS", original: 560, discountPrice: 420, img: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=687&auto=format&fit=crop" },
+    { id: 8, name: "Bark Leather", category: "LEATHER", original: 2590, discountPrice: 1942, img: "https://plus.unsplash.com/premium_photo-1661313817350-1fa759c43a3b?q=80&w=1217&auto=format&fit=crop" },
+    { id: 9, name: "Sage Corset", category: "TOPS", original: 520, discountPrice: 390, img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=688&auto=format&fit=crop" },
+    { id: 10, name: "Root Denim", category: "DENIM", original: 740, discountPrice: 555, img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=600&auto=format&fit=crop" },
+    { id: 11, name: "Verdant Gown", category: "EVENING", original: 3490, discountPrice: 2617, img: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=687&auto=format&fit=crop" },
+    { id: 12, name: "Stone Vest", category: "LAYERING", original: 610, discountPrice: 457, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=600&auto=format&fit=crop" }
+  ];
+
+  let cart = [];
+  const cartOverlay = document.getElementById('cartOverlay');
+  const cartIcon = document.getElementById('cartIcon');
+  const closeCartBtn = document.getElementById('closeCartBtn');
+  const cartItemsContainer = document.getElementById('cartItemsContainer');
+  const cartFooter = document.getElementById('cartFooter');
+  const cartTotalSpan = document.getElementById('cartTotalPrice');
+  const cartCountSpan = document.getElementById('cartCount');
+
+  function saveCart() { localStorage.setItem('ritualCart', JSON.stringify(cart)); }
+  function loadCart() { const saved = localStorage.getItem('ritualCart'); if(saved) cart = JSON.parse(saved); renderCartUI(); updateCount(); }
+  function updateCount() { const total = cart.reduce((s,i)=>s+i.quantity,0); cartCountSpan.innerText = total; }
+
+  function renderCartUI() {
+    if(cart.length === 0) { cartItemsContainer.innerHTML = '<div class="empty-cart">𓋴 your vessel awaits. add wild pieces.</div>'; cartFooter.style.display = 'none'; updateCount(); saveCart(); return; }
+    cartFooter.style.display = 'block';
+    let html = '', total = 0;
+    cart.forEach(item => { total += item.price * item.quantity;
+      html += `<div class="cart-item" data-id="${item.id}">
+        <img class="cart-item-img" src="${item.img}">
+        <div class="cart-item-details">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+          <div class="cart-item-quantity">
+            <button class="quantity-btn dec-qty" data-id="${item.id}">−</button>
+            <span class="cart-item-qty">${item.quantity}</span>
+            <button class="quantity-btn inc-qty" data-id="${item.id}">+</button>
+          </div>
+        </div>
+        <button class="remove-item" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+      </div>`;
+    });
+    cartItemsContainer.innerHTML = html;
+    cartTotalSpan.innerText = `$${total.toLocaleString()}`;
+    document.querySelectorAll('.dec-qty').forEach(btn => btn.addEventListener('click', (e) => { const id = parseInt(btn.dataset.id); updateQty(id, -1); }));
+    document.querySelectorAll('.inc-qty').forEach(btn => btn.addEventListener('click', (e) => { const id = parseInt(btn.dataset.id); updateQty(id, 1); }));
+    document.querySelectorAll('.remove-item').forEach(btn => btn.addEventListener('click', (e) => { const id = parseInt(btn.dataset.id); removeItem(id); }));
+    updateCount(); saveCart();
+  }
+
+  function updateQty(id, delta) { const idx = cart.findIndex(i => i.id === id); if(idx !== -1) { const newQ = cart[idx].quantity + delta; if(newQ <= 0) cart.splice(idx,1); else cart[idx].quantity = newQ; renderCartUI(); } }
+  function removeItem(id) { cart = cart.filter(i => i.id !== id); renderCartUI(); }
+
+  function addToCart(productId) {
+    const prod = products.find(p => p.id === productId);
+    if(!prod) return;
+    const existing = cart.find(i => i.id === productId);
+    if(existing) existing.quantity += 1;
+    else cart.push({ id: prod.id, name: prod.name, price: prod.discountPrice, quantity: 1, img: prod.img });
+    renderCartUI(); updateCount(); cartOverlay.classList.add('active');
+  }
+
+  function renderProducts() {
+    const grid = document.getElementById('productGrid');
+    if(!grid) return;
+    grid.innerHTML = '';
+    products.forEach(prod => {
+      const card = document.createElement('div'); card.className = 'product-card';
+      const discountPercent = Math.round(((prod.original - prod.discountPrice)/prod.original)*100);
+      card.innerHTML = `<div class="card-img"><img src="${prod.img}" loading="lazy"><div class="quick-add"><button class="add-btn-${prod.id} add-to-cart" data-id="${prod.id}">𓃭 ADD TO RITUAL</button></div></div><div class="product-info"><div class="product-details"><h4>${prod.category}</h4><h3>${prod.name}</h3></div><div class="price-block"><span class="current">$${prod.discountPrice.toLocaleString()}</span><span class="old">$${prod.original.toLocaleString()}</span><div style="font-size:0.5rem; color:var(--accent-earth); text-align:right;">-${discountPercent}%</div></div></div>`;
+      grid.appendChild(card);
+    });
+    document.querySelectorAll('.add-to-cart').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); addToCart(parseInt(btn.dataset.id)); }));
+  }
+
+  function initTheme() { const stored = localStorage.getItem('ritual-theme'); const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches; const theme = stored || (isDark ? 'dark' : 'dawn'); document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dawn' : theme); document.getElementById('themeToggle').textContent = theme === 'dawn' ? '🌙' : '☀️'; if(theme !== 'dawn') document.documentElement.setAttribute('data-theme', 'dawn'); }
+  function toggleTheme() { const cur = document.documentElement.getAttribute('data-theme'); const nxt = cur === 'dawn' ? 'dark' : 'dawn'; document.documentElement.setAttribute('data-theme', nxt); localStorage.setItem('ritual-theme', nxt); document.getElementById('themeToggle').textContent = nxt === 'dawn' ? '🌙' : '☀️'; }
+
+  const modal = document.getElementById('entryModal');
+  const closeModal = () => { if(modal) { modal.classList.add('modal-fade-out'); setTimeout(()=> modal.style.display='none', 200); } };
+  document.getElementById('enterBtn')?.addEventListener('click', closeModal);
+  document.getElementById('laterBtn')?.addEventListener('click', closeModal);
+  document.getElementById('closeModalBtn')?.addEventListener('click', closeModal);
+  if(modal) modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+
+  cartIcon?.addEventListener('click', () => cartOverlay.classList.add('active'));
+  closeCartBtn?.addEventListener('click', () => cartOverlay.classList.remove('active'));
+  cartOverlay?.addEventListener('click', (e) => { if(e.target === cartOverlay) cartOverlay.classList.remove('active'); });
+  document.getElementById('checkoutBtn')?.addEventListener('click', () => { alert('𓋴 Your ritual is sealed. Thank you for grounding with us.'); cart = []; renderCartUI(); cartOverlay.classList.remove('active'); });
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) { const t = document.querySelector(this.getAttribute('href')); if(t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } }));
+
+  renderProducts(); initTheme(); loadCart(); document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+</script>
+</body>
+</html>
